@@ -45,18 +45,18 @@
     
     self.swipeTableView = [[SwipeTableView alloc]initWithFrame:self.view.bounds];
 //     _swipeTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    _swipeTableView.shouldAdjustContentSize = NO;
+      _swipeTableView.shouldAdjustContentSize = YES;
     _swipeTableView.delegate = self;
     _swipeTableView.dataSource = self;
     _swipeTableView.swipeHeaderBar = self.segmentBar;
     _swipeTableView.swipeHeaderView = self.tableViewHeader;
-//      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
+      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
+//     _swipeTableView.swipeHeaderTopInset = 0;
     [self.view addSubview:_swipeTableView];
 }
 
 - (void)addchildVC {
-    self.childVC = [[ChildViewController alloc] init];
-    [self addChildViewController:self.childVC];
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,7 +72,9 @@
     return 4;
 }
 
-- (UIScrollView *)swipeTableView:(SwipeTableView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIScrollView *)view {    
+- (UIScrollView *)swipeTableView:(SwipeTableView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIScrollView *)view {
+    self.childVC = [[ChildViewController alloc] init];
+    [self addChildViewController:self.childVC];
     view = self.childVC.tableView;
     return view;
 }
