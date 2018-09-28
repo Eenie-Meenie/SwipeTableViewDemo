@@ -51,7 +51,7 @@
 
 - (void)addchildVC {
     self.childVC = [[ChildViewController alloc] init];
-    [self addChildViewController:_childVC];
+    [self addChildViewController:self.childVC];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,7 +64,7 @@
 #pragma mark - SwipeTableView M
 
 - (NSInteger)numberOfItemsInSwipeTableView:(SwipeTableView *)swipeView {
-    return 1;
+    return 2;
 }
 
 - (UIScrollView *)swipeTableView:(SwipeTableView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIScrollView *)view {    
