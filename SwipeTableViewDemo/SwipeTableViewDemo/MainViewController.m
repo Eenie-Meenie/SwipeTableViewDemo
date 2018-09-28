@@ -10,9 +10,14 @@
 #import <SwipeTableView/SwipeTableView.h>
 #import <SwipeTableView/STHeaderView.h>
 #import "ChildViewController.h"
+#import "CustomSegmentControl.h"
+#import "UIView+STFrame.h"
 
 #define kScreenWidth    [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight   [UIScreen mainScreen].bounds.size.height
+
+#define RGBColorAlpha(r,g,b,f)   [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:f]
+#define RGBColor(r,g,b)          RGBColorAlpha(r,g,b,1)
 
 @interface MainViewController ()<SwipeTableViewDataSource, SwipeTableViewDelegate>
 
@@ -25,6 +30,8 @@
 @property (nonatomic, strong) STHeaderView * tableViewHeader;
 
 @property (nonatomic, strong) UIImageView * headerImageView;
+
+@property (nonatomic, strong) CustomSegmentControl * segmentBar;
 
 @end
 
@@ -41,7 +48,7 @@
     _swipeTableView.shouldAdjustContentSize = NO;
     _swipeTableView.delegate = self;
     _swipeTableView.dataSource = self;
-    _swipeTableView.swipeHeaderBar = nil;
+    _swipeTableView.swipeHeaderBar = self.segmentBar;
     _swipeTableView.swipeHeaderView = self.tableViewHeader;
 //      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
     [self.view addSubview:_swipeTableView];
@@ -62,7 +69,7 @@
 #pragma mark - SwipeTableView M
 
 - (NSInteger)numberOfItemsInSwipeTableView:(SwipeTableView *)swipeView {
-    return 2;
+    return 4;
 }
 
 - (UIScrollView *)swipeTableView:(SwipeTableView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIScrollView *)view {    
@@ -106,6 +113,37 @@
     }
     return _tableViewHeader;
 }
+
+
+- (CustomSegmentControl * )segmentBar {
+    if (nil == _segmentBar) {
+        self.segmentBar = [[CustomSegmentControl alloc]initWithItems:@[@"Item0",@"Item1",@"Item2",@"Item3"]];
+        _segmentBar.st_size = CGSizeMake(kScreenWidth, 40);
+        _segmentBar.font = [UIFont systemFontOfSize:15];
+        _segmentBar.textColor = RGBColor(100, 100, 100);
+        _segmentBar.selectedTextColor = RGBColor(0, 0, 0);
+        _segmentBar.backgroundColor = RGBColor(249, 251, 198);
+        _segmentBar.selectionIndicatorColor = RGBColor(249, 104, 92);
+        _segmentBar.selectedSegmentIndex = _swipeTableView.currentItemIndex;
+        [_segmentBar addTarget:self action:@selector(changeSwipeViewIndex:) forControlEvents:UIControlEventValueChanged];
+    }
+    return _segmentBar;
+}
+
+- (void)changeSwipeViewIndex:(UISegmentedControl *)seg {
+    [_swipeTableView scrollToItemAtIndex:seg.selectedSegmentIndex animated:NO];
+    // request data at current index
+    [self getDataAtIndex:seg.selectedSegmentIndex];
+}
+
+#pragma mark - Data Reuqest
+
+// 请求数据（根据视图滚动到相应的index后再请求数据）
+- (void)getDataAtIndex:(NSInteger)index {
+//    NSInteger numberOfRows = 0;
+    // 请求数据后刷新相应的item
+}
+
 
 
 
