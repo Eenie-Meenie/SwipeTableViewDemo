@@ -37,16 +37,14 @@
     [self addchildVC]; // 添加子VC
     
     self.swipeTableView = [[SwipeTableView alloc]initWithFrame:self.view.bounds];
-     _swipeTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//     _swipeTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    _swipeTableView.shouldAdjustContentSize = NO;
     _swipeTableView.delegate = self;
     _swipeTableView.dataSource = self;
     _swipeTableView.swipeHeaderBar = nil;
-    
     _swipeTableView.swipeHeaderView = self.tableViewHeader;
-      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
-    _swipeTableView.backgroundColor = [UIColor redColor];
+//      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
     [self.view addSubview:_swipeTableView];
-    
 }
 
 - (void)addchildVC {
