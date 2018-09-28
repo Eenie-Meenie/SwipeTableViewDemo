@@ -14,16 +14,37 @@
 
 @implementation ChildViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setUpView];
+    }
+    return self;
+}
+
+- (void)setUpView {
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor yellowColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        self.tableView.estimatedSectionHeaderHeight = 0;
+        self.tableView.estimatedSectionFooterHeight = 0;
+        self.tableView.estimatedRowHeight = 0;
+    }
+//    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
+    
     [self.view addSubview:self.tableView];
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,6 +62,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.01;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01;
 }
 

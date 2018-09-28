@@ -11,6 +11,9 @@
 #import <SwipeTableView/STHeaderView.h>
 #import "ChildViewController.h"
 
+#define kScreenWidth    [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight   [UIScreen mainScreen].bounds.size.height
+
 @interface MainViewController ()<SwipeTableViewDataSource, SwipeTableViewDelegate>
 
 /** <#注释#> */
@@ -18,6 +21,10 @@
 
 /** <#注释#> */
 @property (nonatomic, strong) ChildViewController *childVC;
+
+@property (nonatomic, strong) STHeaderView * tableViewHeader;
+
+@property (nonatomic, strong) UIImageView * headerImageView;
 
 @end
 
@@ -27,7 +34,6 @@
     [super viewDidLoad];
     self.navigationItem.title = @"swipeTbaleView";
     
-    
     [self addchildVC]; // 添加子VC
     
     self.swipeTableView = [[SwipeTableView alloc]initWithFrame:self.view.bounds];
@@ -35,7 +41,8 @@
     _swipeTableView.delegate = self;
     _swipeTableView.dataSource = self;
     _swipeTableView.swipeHeaderBar = nil;
-    _swipeTableView.swipeHeaderView = nil;
+    
+    _swipeTableView.swipeHeaderView = self.tableViewHeader;
       _swipeTableView.swipeHeaderBarScrollDisabled = NO;
     _swipeTableView.backgroundColor = [UIColor redColor];
     [self.view addSubview:_swipeTableView];
@@ -65,13 +72,43 @@
     return view;
 }
 
-//- (BOOL)swipeTableView:(SwipeTableView *)swipeTableView shouldPullToRefreshAtIndex:(NSInteger)index {
-//    return YES;
-//}
+- (UIView *)tableViewHeader {
+    if (nil == _tableViewHeader) {
+        UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
+        // swipe header
+        self.tableViewHeader = [[STHeaderView alloc]init];
+        _tableViewHeader.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width));
+        _tableViewHeader.backgroundColor = [UIColor whiteColor];
+        _tableViewHeader.layer.masksToBounds = YES;
+        
+        // image view
+        self.headerImageView = [[UIImageView alloc]initWithImage:headerImage];
+        _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _headerImageView.userInteractionEnabled = YES;
+        _headerImageView.frame = _tableViewHeader.bounds;
+        _headerImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        
+        // title label
+//        UILabel * title = [[UILabel alloc]init];
+//        title.textColor = RGBColor(255, 255, 255);
+//        title.font = [UIFont boldSystemFontOfSize:17];
+//        title.text = @"Tap To Full Screen";
+//        title.textAlignment = NSTextAlignmentCenter;
+//        title.st_size = CGSizeMake(200, 30);
+//        title.st_centerX = _headerImageView.st_centerX;
+//        title.st_bottom = _headerImageView.st_bottom - 20;
+//        
+        // tap gesture
+//        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHeader:)];
+        
+        [_tableViewHeader addSubview:_headerImageView];
+//        [_tableViewHeader addSubview:title];
+//        [_headerImageView addGestureRecognizer:tap];
+//        [self shimmerHeaderTitle:title];
+    }
+    return _tableViewHeader;
+}
 
-//- (CGFloat)swipeTableView:(SwipeTableView *)swipeTableView heightForRefreshHeaderAtIndex:(NSInteger)index {
-//    return 64;
-//}
 
 
 
