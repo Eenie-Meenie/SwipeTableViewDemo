@@ -14,9 +14,14 @@
 
 @implementation ChildViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
+- (instancetype)init{
+    if (self = [super init]) {
+        [self setupView];
+    }
+    return self;
+}
+
+- (void)setupView{
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -24,6 +29,12 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:self.tableView];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
