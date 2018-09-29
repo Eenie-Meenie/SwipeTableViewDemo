@@ -50,7 +50,7 @@
     [self addchildVC]; // 添加子VC
     
     self.swipeTableView = [[SwipeTableView alloc]initWithFrame:self.view.bounds];
-//     _swipeTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+     _swipeTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
       _swipeTableView.shouldAdjustContentSize = YES;
     _swipeTableView.delegate = self;
     _swipeTableView.dataSource = self;
@@ -58,6 +58,8 @@
     _swipeTableView.swipeHeaderView = self.tableViewHeader;
 //      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
     _swipeTableView.swipeHeaderBarScrollDisabled = YES;
+     _swipeTableView.alwaysBounceHorizontal = NO;
+//     _swipeTableView.swipeHeaderTopInset = 0;
 //     _swipeTableView.swipeHeaderTopInset = 64;
     [self.view addSubview:_swipeTableView];
     
@@ -65,6 +67,13 @@
     // 监听childView的偏移量
     [RACObserve(self.childVC.tableView, contentOffset) subscribeNext:^(id  _Nullable x) {
         UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
+        
+//         CGFloat offsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height;
+//        //限制下拉的距离
+//        if(offsetY < -100) {
+//            [self.childVC.tableView setContentOffset:CGPointMake(0, -100 + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height)];
+//        }
+//        
         CGFloat newOffsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height;
         if (newOffsetY < 0) {
             self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
@@ -130,7 +139,7 @@
         self.tableViewHeader = [[STHeaderView alloc]init];
         _tableViewHeader.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width));
         _tableViewHeader.backgroundColor = [UIColor whiteColor];
-        _tableViewHeader.layer.masksToBounds = YES;
+//        _tableViewHeader.layer.masksToBounds = YES;
         
         // image view
         self.headerImageView = [[UIImageView alloc]initWithImage:headerImage];
