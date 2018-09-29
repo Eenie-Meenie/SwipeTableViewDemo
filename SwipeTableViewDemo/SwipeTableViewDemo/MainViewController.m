@@ -153,7 +153,7 @@
         _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         _headerImageView.userInteractionEnabled = YES;
 //        _headerImageView.frame = _tableViewHeader.bounds;
-        _headerImageView.frame = CGRectMake(0, - 500, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width));
+        _headerImageView.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width));
 //        _headerImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
         // title label
