@@ -100,15 +100,12 @@
         CGFloat newOffsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.myCategoryView.st_height + 64;
         
         
-        
-        if (newOffsetY > 64)
-        {
+        if (newOffsetY > 64) {
             CGFloat alpha = (newOffsetY - 64) / 64;
             [self wr_setNavBarBackgroundAlpha:alpha];
             [self wr_setNavBarTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
             [self wr_setNavBarTitleColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
             [self wr_setStatusBarStyle:UIStatusBarStyleDefault];
-            self.title = @"wangrui460";
         }
         else
         {
@@ -116,7 +113,6 @@
             [self wr_setNavBarTintColor:[UIColor whiteColor]];
             [self wr_setNavBarTitleColor:[UIColor whiteColor]];
             [self wr_setStatusBarStyle:UIStatusBarStyleLightContent];
-            self.title = @"";
         }
         
         if (newOffsetY < 0) {
