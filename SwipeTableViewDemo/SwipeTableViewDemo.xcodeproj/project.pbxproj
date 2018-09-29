@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53225550215F81240059D741 /* WRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5322554C215F81240059D741 /* WRNavigationBar.m */; };
+		53225551215F81240059D741 /* WRCustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5322554F215F81240059D741 /* WRCustomNavigationBar.m */; };
 		534DBF8C215F06CE000A5B43 /* secondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534DBF8B215F06CE000A5B43 /* secondViewController.m */; };
 		534DBF8F215F5937000A5B43 /* UserSegmentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 534DBF8E215F5937000A5B43 /* UserSegmentControl.m */; };
 		534DBF92215F59EF000A5B43 /* UIButton+Edge.m in Sources */ = {isa = PBXBuildFile; fileRef = 534DBF91215F59EF000A5B43 /* UIButton+Edge.m */; };
@@ -72,6 +74,10 @@
 
 /* Begin PBXFileReference section */
 		09B7F6D8CA6D4277281E7ED3 /* Pods_SwipeTableViewDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwipeTableViewDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5322554C215F81240059D741 /* WRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRNavigationBar.m; sourceTree = "<group>"; };
+		5322554D215F81240059D741 /* WRCustomNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRCustomNavigationBar.h; sourceTree = "<group>"; };
+		5322554E215F81240059D741 /* WRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRNavigationBar.h; sourceTree = "<group>"; };
+		5322554F215F81240059D741 /* WRCustomNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRCustomNavigationBar.m; sourceTree = "<group>"; };
 		534DBF8A215F06CE000A5B43 /* secondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = secondViewController.h; sourceTree = "<group>"; };
 		534DBF8B215F06CE000A5B43 /* secondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = secondViewController.m; sourceTree = "<group>"; };
 		534DBF8D215F5937000A5B43 /* UserSegmentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSegmentControl.h; sourceTree = "<group>"; };
@@ -192,9 +198,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5322554B215F81240059D741 /* WRNavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				5322554C215F81240059D741 /* WRNavigationBar.m */,
+				5322554D215F81240059D741 /* WRCustomNavigationBar.h */,
+				5322554E215F81240059D741 /* WRNavigationBar.h */,
+				5322554F215F81240059D741 /* WRCustomNavigationBar.m */,
+			);
+			path = WRNavigationBar;
+			sourceTree = "<group>";
+		};
 		534DBF93215F6304000A5B43 /* Third */ = {
 			isa = PBXGroup;
 			children = (
+				5322554B215F81240059D741 /* WRNavigationBar */,
 				534DBF94215F6314000A5B43 /* Sources */,
 			);
 			path = Third;
@@ -633,6 +651,8 @@
 				534DBF92215F59EF000A5B43 /* UIButton+Edge.m in Sources */,
 				534DBFE5215F6314000A5B43 /* JXCategoryIndicatorCellModel.m in Sources */,
 				534DBFF4215F6314000A5B43 /* JXCategoryNumberView.m in Sources */,
+				53225551215F81240059D741 /* WRCustomNavigationBar.m in Sources */,
+				53225550215F81240059D741 /* WRNavigationBar.m in Sources */,
 				534DBFF7215F6314000A5B43 /* JXCategoryListVCContainerView.m in Sources */,
 				534DBFF3215F6314000A5B43 /* JXCategoryImageCellModel.m in Sources */,
 				53DF50E0215E118200DF1FAF /* AppDelegate.m in Sources */,

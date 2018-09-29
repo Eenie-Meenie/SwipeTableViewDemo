@@ -16,6 +16,7 @@
 #import <ReactiveObjC/ReactiveObjC.h>
 #import "UserSegmentControl.h"
 #import "JXCategoryView.h"
+#import "WRNavigationBar.h"
 
 #define kScreenWidth    [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight   [UIScreen mainScreen].bounds.size.height
@@ -53,6 +54,15 @@
     self.navigationItem.title = @"swipeTbaleView";
     
     
+    // 设置导航栏颜色
+    [self wr_setNavBarBarTintColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
+    
+    // 设置初始导航栏透明度
+    [self wr_setNavBarBackgroundAlpha:0];
+    
+    // 设置导航栏按钮和标题颜色
+    [self wr_setNavBarTintColor:[UIColor whiteColor]];
+    
     [self addchildVC]; // 添加子VC
     
     self.swipeTableView = [[SwipeTableView alloc]initWithFrame:self.view.bounds];
@@ -88,7 +98,29 @@
         UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
 //         CGFloat offsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height + 64;
         CGFloat newOffsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.myCategoryView.st_height + 64;
+        
+        
+        
+        if (newOffsetY > 64)
+        {
+            CGFloat alpha = (newOffsetY - 64) / 64;
+            [self wr_setNavBarBackgroundAlpha:alpha];
+            [self wr_setNavBarTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
+            [self wr_setNavBarTitleColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
+            [self wr_setStatusBarStyle:UIStatusBarStyleDefault];
+            self.title = @"wangrui460";
+        }
+        else
+        {
+            [self wr_setNavBarBackgroundAlpha:0];
+            [self wr_setNavBarTintColor:[UIColor whiteColor]];
+            [self wr_setNavBarTitleColor:[UIColor whiteColor]];
+            [self wr_setStatusBarStyle:UIStatusBarStyleLightContent];
+            self.title = @"";
+        }
+        
         if (newOffsetY < 0) {
+
             self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width)+50);
             
 //            self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
