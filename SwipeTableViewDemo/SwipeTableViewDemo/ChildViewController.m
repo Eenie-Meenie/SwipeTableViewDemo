@@ -27,16 +27,22 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.backgroundColor = [UIColor yellowColor];
+//    self.tableView.backgroundColor = [UIColor yellowColor];
 //    UIImageView *backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"onepiece_kiudai"]];
 //    backImageView.contentMode = UIViewContentModeScaleAspectFill;
 //    self.tableView.backgroundView = backImageView; // 背景视图
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
-     self.tableView.layer.cornerRadius = 20;
-    self.tableView.layer.masksToBounds = YES;
-   
+//     self.tableView.layer.cornerRadius = 20;
+//    self.tableView.layer.masksToBounds = YES;
+    
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 200)];
+//    headerView.layer.cornerRadius = 30;
+//    headerView.backgroundColor = [UIColor whiteColor];
+//    
+//    self.tableView.tableHeaderView = headerView;
+//   
     
     if (@available(iOS 11.0, *)) {
         self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;

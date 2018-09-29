@@ -14,6 +14,8 @@
 #import "UIView+STFrame.h"
 #import "secondViewController.h"
 #import <ReactiveObjC/ReactiveObjC.h>
+#import "UserSegmentControl.h"
+#import "JXCategoryView.h"
 
 #define kScreenWidth    [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight   [UIScreen mainScreen].bounds.size.height
@@ -36,7 +38,11 @@
 
 @property (nonatomic, strong) UIImageView * headerImageView;
 
-@property (nonatomic, strong) CustomSegmentControl * segmentBar;
+//@property (nonatomic, strong) CustomSegmentControl * segmentBar;
+
+//@property (nonatomic, strong) UserSegmentControl * segmentBar;
+
+@property (nonatomic, strong) JXCategoryTitleView *myCategoryView;
 
 @end
 
@@ -54,35 +60,46 @@
       _swipeTableView.shouldAdjustContentSize = YES;
     _swipeTableView.delegate = self;
     _swipeTableView.dataSource = self;
-    _swipeTableView.swipeHeaderBar = self.segmentBar;
+    
+    
+    /** 设置图片包含bar */
+//    UIImageView *imageView = [[UIImageView alloc] init];
+//    imageView.frame = CGRectMake(0, 0, kScreenWidth, 50);
+//    imageView.image = [UIImage imageNamed:@"onepiece_kiudai"];
+//
+//    imageView.contentMode = UIViewContentModeBottom;
+//
+//    [imageView addSubview:self.myCategoryView];
+   
     _swipeTableView.swipeHeaderView = self.tableViewHeader;
-//      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
-    _swipeTableView.swipeHeaderBarScrollDisabled = YES;
+     _swipeTableView.swipeHeaderBar = self.myCategoryView;
+    
+    _swipeTableView.swipeHeaderBarScrollDisabled = NO;
      _swipeTableView.alwaysBounceHorizontal = NO;
 //     _swipeTableView.swipeHeaderTopInset = 0;
-//     _swipeTableView.swipeHeaderTopInset = 64;
+     _swipeTableView.swipeHeaderTopInset = 64;
+    
+//    _swipeTableView.swipeHeaderBarScrollDisabled = YES;
     [self.view addSubview:_swipeTableView];
     
     
     // 监听childView的偏移量
     [RACObserve(self.childVC.tableView, contentOffset) subscribeNext:^(id  _Nullable x) {
         UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
-        
-//         CGFloat offsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height;
-//        //限制下拉的距离
-//        if(offsetY < -100) {
-//            [self.childVC.tableView setContentOffset:CGPointMake(0, -100 + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height)];
-//        }
-//        
-        CGFloat newOffsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height;
+//         CGFloat offsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height + 64;
+        CGFloat newOffsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.myCategoryView.st_height + 64;
         if (newOffsetY < 0) {
-            self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
+            self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width)+50);
         }
     }];
     
-//    [[self.childVC rac_signalForSelector:@selector(scrollViewDidScroll:) fromProtocol:@protocol(UIScrollViewDelegate)] subscribeNext:^(RACTuple * _Nullable x) {
-//        NSLog(@"----%@----", x);
-//    }];
+    [RACObserve(self.secondVC.tableView, contentOffset) subscribeNext:^(id  _Nullable x) {
+        UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
+        CGFloat newOffsetY =  self.secondVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.myCategoryView.st_height + 64;
+        if (newOffsetY < 0) {
+            self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width)+50);
+        }
+    }];
 }
 
 - (void)addchildVC {
@@ -129,7 +146,8 @@
 
 // swipetableView index变化，改变seg的index
 - (void)swipeTableViewCurrentItemIndexDidChange:(SwipeTableView *)swipeView {
-    _segmentBar.selectedSegmentIndex = swipeView.currentItemIndex;
+//    _segmentBar.selectedSegmentIndex = swipeView.currentItemIndex;
+//    _myCategoryView.selectedIndex = swipeView.currentItemIndex;
 }
 
 - (STHeaderView *)tableViewHeader {
@@ -146,7 +164,7 @@
         _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         _headerImageView.userInteractionEnabled = YES;
 //        _headerImageView.frame = _tableViewHeader.bounds;
-        _headerImageView.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width));
+        _headerImageView.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width) + 50);
 //        _headerImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
         // title label
@@ -186,25 +204,53 @@
     }];
 }
 
-- (CustomSegmentControl * )segmentBar {
-    if (nil == _segmentBar) {
-        self.segmentBar = [[CustomSegmentControl alloc]initWithItems:@[@"Item0",@"Item1"]];
-        _segmentBar.st_size = CGSizeMake(kScreenWidth, 40);
-        _segmentBar.font = [UIFont systemFontOfSize:15];
-        _segmentBar.textColor = RGBColor(100, 100, 100);
-        _segmentBar.selectedTextColor = RGBColor(0, 0, 0);
-        _segmentBar.backgroundColor = RGBColor(249, 251, 198);
-        _segmentBar.selectionIndicatorColor = RGBColor(249, 104, 92);
-        _segmentBar.selectedSegmentIndex = _swipeTableView.currentItemIndex;
-        [_segmentBar addTarget:self action:@selector(changeSwipeViewIndex:) forControlEvents:UIControlEventValueChanged];
-    }
-    return _segmentBar;
-}
+
+//- (UserSegmentControl * )segmentBar {
+//    if (nil == _segmentBar) {
+//        _segmentBar = [[UserSegmentControl alloc]initWithItems:@[@"音乐",@"动态"]];
+//        _segmentBar.st_size = CGSizeMake(kScreenWidth, 68);
+//        _segmentBar.selectedSegmentIndex = _swipeTableView.currentItemIndex;
+//        [_segmentBar addTarget:self action:@selector(changeSwipeViewIndex:) forControlEvents:UIControlEventValueChanged];
+//    }
+//    return _segmentBar;
+//}
+
+//- (CustomSegmentControl * )segmentBar {
+//    if (nil == _segmentBar) {
+//        self.segmentBar = [[CustomSegmentControl alloc]initWithItems:@[@"Item0",@"Item1"]];
+//        _segmentBar.st_size = CGSizeMake(kScreenWidth, 40);
+//        _segmentBar.font = [UIFont systemFontOfSize:15];
+//        _segmentBar.textColor = RGBColor(100, 100, 100);
+//        _segmentBar.selectedTextColor = RGBColor(0, 0, 0);
+//        _segmentBar.backgroundColor = RGBColor(249, 251, 198);
+//        _segmentBar.selectionIndicatorColor = RGBColor(249, 104, 92);
+//        _segmentBar.selectedSegmentIndex = _swipeTableView.currentItemIndex;
+//        [_segmentBar addTarget:self action:@selector(changeSwipeViewIndex:) forControlEvents:UIControlEventValueChanged];
+//    }
+//    return _segmentBar;
+//}
 
 - (void)changeSwipeViewIndex:(UISegmentedControl *)seg {
     [_swipeTableView scrollToItemAtIndex:seg.selectedSegmentIndex animated:NO];
     // request data at current index
     [self getDataAtIndex:seg.selectedSegmentIndex];
+}
+
+- (JXCategoryTitleView *)myCategoryView {
+    if (!_myCategoryView) {
+        
+        self.myCategoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
+         self.myCategoryView.titles = @[@"音乐",@"动态"];
+        self.myCategoryView.backgroundColor = [UIColor clearColor];
+        self.myCategoryView.titleColorGradientEnabled = YES;
+        JXCategoryIndicatorLineView *lineView = [[JXCategoryIndicatorLineView alloc] init];
+        lineView.indicatorLineWidth = 50;
+        self.myCategoryView.indicators = @[lineView];
+        lineView.lineStyle = JXCategoryIndicatorLineStyle_IQIYI;
+        // 关联滚动视图
+        self.myCategoryView.contentScrollView = self.swipeTableView.contentView;
+    }
+    return _myCategoryView;
 }
 
 #pragma mark - Data Reuqest
