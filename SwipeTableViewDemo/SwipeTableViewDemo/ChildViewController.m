@@ -83,16 +83,6 @@
 }
 
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSMutableDictionary *offsetDic = [NSMutableDictionary new];
-//    NSString *offsetStr = FORMAT(@"%f", scrollView.contentOffset.y);
-    NSString *offsetStr = [NSString stringWithFormat:@"%f",scrollView.contentOffset.y];
-    [offsetDic setObject:offsetStr forKey:@"offset"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"HuanYinUserScrollViewChanged" object:nil userInfo:offsetDic];
-}
-
-
-
 
 /*
 #pragma mark - Navigation

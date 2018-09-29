@@ -13,6 +13,7 @@
 #import "CustomSegmentControl.h"
 #import "UIView+STFrame.h"
 #import "secondViewController.h"
+#import <ReactiveObjC/ReactiveObjC.h>
 
 #define kScreenWidth    [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight   [UIScreen mainScreen].bounds.size.height
@@ -45,7 +46,6 @@
     [super viewDidLoad];
     self.navigationItem.title = @"swipeTbaleView";
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollViewChanged:) name:@"HuanYinUserScrollViewChanged" object:nil];
     
     [self addchildVC]; // 添加子VC
     
@@ -56,9 +56,24 @@
     _swipeTableView.dataSource = self;
     _swipeTableView.swipeHeaderBar = self.segmentBar;
     _swipeTableView.swipeHeaderView = self.tableViewHeader;
-      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
+//      _swipeTableView.swipeHeaderBarScrollDisabled = NO;
+    _swipeTableView.swipeHeaderBarScrollDisabled = YES;
 //     _swipeTableView.swipeHeaderTopInset = 64;
     [self.view addSubview:_swipeTableView];
+    
+    
+    // 监听childView的偏移量
+    [RACObserve(self.childVC.tableView, contentOffset) subscribeNext:^(id  _Nullable x) {
+        UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
+        CGFloat newOffsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height;
+        if (newOffsetY < 0) {
+            self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
+        }
+    }];
+    
+//    [[self.childVC rac_signalForSelector:@selector(scrollViewDidScroll:) fromProtocol:@protocol(UIScrollViewDelegate)] subscribeNext:^(RACTuple * _Nullable x) {
+//        NSLog(@"----%@----", x);
+//    }];
 }
 
 - (void)addchildVC {
@@ -67,7 +82,6 @@
     
     self.secondVC = [[secondViewController alloc] init];
     [self addChildViewController:self.secondVC];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,37 +91,7 @@
 
 #define SCROLL_DOWN_LIMIT 100
 #pragma mark - accessory method
-- (void)scrollViewChanged:(NSNotification *)text{
-    
-      UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
-    
-//    float newx = [[text.userInfo objectForKey:@"offset"] floatValue] + headerImage.size.height + 60;
-//    float alpha = newx / 265;
-//    self.navigationBar.backgroundView.alpha = alpha;
-//    self.navigationBar.titleLabel.alpha = alpha;
-//    if (newx < 0) {
-//        CGRect rect = self.tableViewHeader.backImageView.frame;
-//        rect.origin.y = newx - 2;
-//        rect.size.height = 277 - newx;
-//        self.tableViewHeader.backImageView.frame = rect;
-//    }
-    //限制下拉的距离
-//    CGFloat offsetY = [[text.userInfo objectForKey:@"offset"] floatValue] + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height;
-//    if(offsetY < - SCROLL_DOWN_LIMIT) {
-//        [self.swipeTableView.contentView setContentOffset:CGPointMake(0, -SCROLL_DOWN_LIMIT)];
-//    }
-    
-    CGFloat newOffsetY =  [[text.userInfo objectForKey:@"offset"] floatValue] + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height;
-    if (newOffsetY < 0) {
-//        for (UIView * backView in self.tableViewHeader.subviews ) {
-//            if ([backView isKindOfClass:[UIImageView class]]) {
-//               backView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
-//            }
-//        }
-        _headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
-//        _tableViewHeader.frame =  CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
-    }
-}
+
 
 #pragma mark - SwipeTableView M
 
@@ -221,9 +205,4 @@
 //    NSInteger numberOfRows = 0;
     // 请求数据后刷新相应的item
 }
-
-
-
-
-
 @end
