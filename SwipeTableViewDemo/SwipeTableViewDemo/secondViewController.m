@@ -1,18 +1,18 @@
 //
-//  ChildViewController.m
+//  secondViewController.m
 //  SwipeTableViewDemo
 //
-//  Created by hanbo on 2018/9/28.
+//  Created by hanbo on 2018/9/29.
 //  Copyright © 2018年 hanbo. All rights reserved.
 //
 
-#import "ChildViewController.h"
+#import "secondViewController.h"
 
-@interface ChildViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface secondViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
 
-@implementation ChildViewController
+@implementation secondViewController
 
 - (instancetype)init
 {
@@ -27,10 +27,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-//    self.tableView.backgroundColor = [UIColor yellowColor];
-//    UIImageView *backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"onepiece_kiudai"]];
-//    backImageView.contentMode = UIViewContentModeScaleAspectFill;
-//    self.tableView.backgroundView = backImageView; // 背景视图
+    //    self.tableView.backgroundColor = [UIColor yellowColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
@@ -40,14 +37,16 @@
         self.tableView.estimatedSectionFooterHeight = 0;
         self.tableView.estimatedRowHeight = 0;
     }
-//    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
+    //    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
     
     [self.view addSubview:self.tableView];
     
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,9 +54,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-   return 1;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -78,21 +76,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"标题%ld", indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"分区二%ld", indexPath.row];
     return cell;
 }
-
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSMutableDictionary *offsetDic = [NSMutableDictionary new];
-//    NSString *offsetStr = FORMAT(@"%f", scrollView.contentOffset.y);
-    NSString *offsetStr = [NSString stringWithFormat:@"%f",scrollView.contentOffset.y];
-    [offsetDic setObject:offsetStr forKey:@"offset"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"HuanYinUserScrollViewChanged" object:nil userInfo:offsetDic];
-}
-
-
-
 
 /*
 #pragma mark - Navigation

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		534DBF8C215F06CE000A5B43 /* secondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534DBF8B215F06CE000A5B43 /* secondViewController.m */; };
 		53DF50E0215E118200DF1FAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DF50DF215E118200DF1FAF /* AppDelegate.m */; };
 		53DF50E8215E118300DF1FAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53DF50E7215E118300DF1FAF /* Assets.xcassets */; };
 		53DF50EB215E118300DF1FAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53DF50E9215E118300DF1FAF /* LaunchScreen.storyboard */; };
@@ -38,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		09B7F6D8CA6D4277281E7ED3 /* Pods_SwipeTableViewDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwipeTableViewDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		534DBF8A215F06CE000A5B43 /* secondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = secondViewController.h; sourceTree = "<group>"; };
+		534DBF8B215F06CE000A5B43 /* secondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = secondViewController.m; sourceTree = "<group>"; };
 		53DF50DB215E118200DF1FAF /* SwipeTableViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwipeTableViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53DF50DE215E118200DF1FAF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		53DF50DF215E118200DF1FAF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				53DF5111215E136C00DF1FAF /* MainViewController.m */,
 				53DF5113215E1FEE00DF1FAF /* ChildViewController.h */,
 				53DF5114215E1FEE00DF1FAF /* ChildViewController.m */,
+				534DBF8A215F06CE000A5B43 /* secondViewController.h */,
+				534DBF8B215F06CE000A5B43 /* secondViewController.m */,
 				53DF5116215E37CE00DF1FAF /* CustomSegmentControl.h */,
 				53DF5117215E37CE00DF1FAF /* CustomSegmentControl.m */,
 				53DF50E7215E118300DF1FAF /* Assets.xcassets */,
@@ -347,6 +352,7 @@
 				53DF50EE215E118300DF1FAF /* main.m in Sources */,
 				53DF5112215E136C00DF1FAF /* MainViewController.m in Sources */,
 				53DF50E0215E118200DF1FAF /* AppDelegate.m in Sources */,
+				534DBF8C215F06CE000A5B43 /* secondViewController.m in Sources */,
 				53DF5115215E1FEE00DF1FAF /* ChildViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
