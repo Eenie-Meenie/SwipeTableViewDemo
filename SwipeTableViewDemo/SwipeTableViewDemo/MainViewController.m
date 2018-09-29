@@ -139,7 +139,7 @@
     _segmentBar.selectedSegmentIndex = swipeView.currentItemIndex;
 }
 
-- (UIView *)tableViewHeader {
+- (STHeaderView *)tableViewHeader {
     if (nil == _tableViewHeader) {
         UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
         // swipe header
@@ -170,7 +170,7 @@
 //        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHeader:)];
         
         [_tableViewHeader addSubview:_headerImageView];
-//        [_tableViewHeader addSubview:title];
+        [_tableViewHeader addSubview:title];
 //        [_headerImageView addGestureRecognizer:tap];
         [self shimmerHeaderTitle:title];
     }
