@@ -63,16 +63,16 @@
     
     
     /** 设置图片包含bar */
-//    UIImageView *imageView = [[UIImageView alloc] init];
-//    imageView.frame = CGRectMake(0, 0, kScreenWidth, 50);
-//    imageView.image = [UIImage imageNamed:@"onepiece_kiudai"];
-//
-//    imageView.contentMode = UIViewContentModeBottom;
-//
-//    [imageView addSubview:self.myCategoryView];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(0, 0, kScreenWidth, 50);
+    imageView.image = [UIImage imageNamed:@"onepiece_kiudai"];
+
+    imageView.contentMode = UIViewContentModeBottom;
+
+    [imageView addSubview:self.myCategoryView];
    
     _swipeTableView.swipeHeaderView = self.tableViewHeader;
-     _swipeTableView.swipeHeaderBar = self.myCategoryView;
+     _swipeTableView.swipeHeaderBar = imageView;
     
     _swipeTableView.swipeHeaderBarScrollDisabled = NO;
      _swipeTableView.alwaysBounceHorizontal = NO;
@@ -90,6 +90,8 @@
         CGFloat newOffsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.myCategoryView.st_height + 64;
         if (newOffsetY < 0) {
             self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width)+50);
+            
+//            self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
         }
     }];
     
@@ -97,6 +99,7 @@
         UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
         CGFloat newOffsetY =  self.secondVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.myCategoryView.st_height + 64;
         if (newOffsetY < 0) {
+//              self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
             self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width)+50);
         }
     }];
@@ -164,7 +167,9 @@
         _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         _headerImageView.userInteractionEnabled = YES;
 //        _headerImageView.frame = _tableViewHeader.bounds;
-        _headerImageView.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width) + 50);
+//        _headerImageView.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width) + 50);
+        
+           _headerImageView.frame = CGRectMake(0, 0, kScreenWidth, kScreenWidth * (headerImage.size.height/headerImage.size.width));
 //        _headerImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
         // title label
@@ -242,6 +247,7 @@
         self.myCategoryView = [[JXCategoryTitleView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
          self.myCategoryView.titles = @[@"音乐",@"动态"];
         self.myCategoryView.backgroundColor = [UIColor clearColor];
+//        self.myCategoryView.backgroundColor = [UIColor yellowColor];
         self.myCategoryView.titleColorGradientEnabled = YES;
         JXCategoryIndicatorLineView *lineView = [[JXCategoryIndicatorLineView alloc] init];
         lineView.indicatorLineWidth = 50;
