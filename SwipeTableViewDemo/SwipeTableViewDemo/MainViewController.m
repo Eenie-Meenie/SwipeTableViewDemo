@@ -94,12 +94,14 @@
     
     
     // 监听childView的偏移量
+     @weakify(self);
     [RACObserve(self.childVC.tableView, contentOffset) subscribeNext:^(id  _Nullable x) {
+        
+        @strongify(self);
         UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
 //         CGFloat offsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.segmentBar.st_height + 64;
         CGFloat newOffsetY =  self.childVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.myCategoryView.st_height + 64;
-        
-        
+    
         if (newOffsetY > 64) {
             CGFloat alpha = (newOffsetY - 64) / 64;
             [self wr_setNavBarBackgroundAlpha:alpha];
@@ -123,9 +125,26 @@
         }
     }];
     
+    
     [RACObserve(self.secondVC.tableView, contentOffset) subscribeNext:^(id  _Nullable x) {
         UIImage * headerImage = [UIImage imageNamed:@"onepiece_kiudai"];
         CGFloat newOffsetY =  self.secondVC.tableView.contentOffset.y + kScreenWidth * (headerImage.size.height/headerImage.size.width) + self.myCategoryView.st_height + 64;
+        @strongify(self);
+        if (newOffsetY > 64) {
+            CGFloat alpha = (newOffsetY - 64) / 64;
+            [self wr_setNavBarBackgroundAlpha:alpha];
+            [self wr_setNavBarTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
+            [self wr_setNavBarTitleColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
+            [self wr_setStatusBarStyle:UIStatusBarStyleDefault];
+        }
+        else
+        {
+            [self wr_setNavBarBackgroundAlpha:0];
+            [self wr_setNavBarTintColor:[UIColor whiteColor]];
+            [self wr_setNavBarTitleColor:[UIColor whiteColor]];
+            [self wr_setStatusBarStyle:UIStatusBarStyleLightContent];
+        }
+        
         if (newOffsetY < 0) {
 //              self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width));
             self.headerImageView.frame = CGRectMake(0, newOffsetY, kScreenWidth, -newOffsetY + kScreenWidth * (headerImage.size.height/headerImage.size.width)+50);
